@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block title %}Reportes{% endblock %}
+
+{% block content %}
+
+
+<h2 class="major">Reportes</h2>
+<a class="button" href="{% url 'home' %}">Volver</a>
+<section id="reportes">
+    <div class="chart-container">
+        <h2>Respuestas preguntas</h2>
+        <img src="data:image/png;base64,{{ imagen_base64_pregunta1 }}" alt="Ingresos por día">
+        <img src="data:image/png;base64,{{ imagen_base64_pregunta2 }}" alt="Ingresos por día">
+        <img src="data:image/png;base64,{{ imagen_base64_pregunta3 }}" alt="Ingresos por día">
+        <img src="data:image/png;base64,{{ imagen_base64_pregunta4 }}" alt="Ingresos por día">
+        <img src="data:image/png;base64,{{ imagen_base64_pregunta5 }}" alt="Ingresos por día">
+        <img src="data:image/png;base64,{{ imagen_base64_pregunta6 }}" alt="Ingresos por día">
+        <h2>Ingresos por día</h2>
+        <img src="data:image/png;base64,{{ imagen_base64_ingresos }}" alt="Ingresos por día">
+    
+        <h2>Personas por género</h2>
+        <img src="data:image/png;base64,{{ imagen_base64_genero }}" alt="Personas por género">
+    
+        <h2>Ingresos por comuna</h2>
+            <img src="data:image/png;base64,{{ imagen_base64_ingresos_comuna }}" alt="Ingresos por comuna">
+        <h2>Referencias</h2>
+            <img src="data:image/png;base64,{{ imagen_base64_referencias }}" alt="Referencias">
+    </div>
+
+</section>
+<a class="button" href="{% url 'home' %}">Volver</a>
+
+<style>
+    .chart-container {
+        width: 100%;
+        height: auto;
+        position: relative;
+    }
+
+    section#reportes {
+        text-align: center;
+    }
+</style>
+
+{% endblock %}
