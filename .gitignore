@@ -16,6 +16,7 @@
 # Directorios
 __pycache__/
 node_modules/
+env/
 
 # Entornos virtuales de Python
 .venv
