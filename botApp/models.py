@@ -71,7 +71,7 @@ class Ocupacion(models.Model):
 
 class Usuario(models.Model):
     id = models.AutoField(primary_key=True, verbose_name="ID Usuario")
-    AnioNacimiento = models.CharField(max_length=200, verbose_name="Fecha de Nacimiento")
+    FechaNacimiento = models.DateField(verbose_name="Fecha Nacimiento")
     id_manychat = models.CharField(max_length=200)
     Rut = models.CharField(max_length=10)
     Whatsapp = models.CharField(max_length=200)

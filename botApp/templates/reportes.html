@@ -9,6 +9,10 @@
 <a class="button" href="{% url 'home' %}">Volver</a>
 <section id="reportes">
     <div class="chart-container">
+        <h2>Personas por año nacimiento</h2>
+        <img src="data:image/png;base64,{{ imagen_base64_año }}" alt="Ingresos por Año de Nacimiento">
+        <h2>Personas por edad</h2>
+        <img src="data:image/png;base64,{{ imagen_base64_edades }}" alt="Ingresos por Edad">
         <h2>Respuestas preguntas</h2>
         <img src="data:image/png;base64,{{ imagen_base64_pregunta1 }}" alt="Ingresos por día">
         <img src="data:image/png;base64,{{ imagen_base64_pregunta2 }}" alt="Ingresos por día">

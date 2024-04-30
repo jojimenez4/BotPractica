@@ -534,6 +534,53 @@ def generar_grafico_pregunta6():
     imagen_base64 = base64.b64encode(buffer.getvalue()).decode("utf-8")
     return imagen_base64
 
+def generar_grafico_personas_por_año():
+    with connection.cursor() as cursor:
+        cursor.execute(
+            "SELECT YEAR(FechaNacimiento), COUNT(*) FROM botApp_usuario GROUP BY YEAR(FechaNacimiento)"
+        )
+        resultados = cursor.fetchall()
+    edades = []
+    cantidades = []
+    for resultado in resultados:
+        edad, cantidad = resultado
+        edades.append(edad)
+        cantidades.append(cantidad)
+    plt.bar(edades, cantidades, color='blue')
+    plt.xlabel('Año de Nacimiento')
+    plt.ylabel('Número de Personas')
+    plt.title('Ingresos por Año de Nacimiento')
+    buffer = BytesIO()
+    plt.savefig(buffer, format='png')
+    buffer.seek(0)
+    plt.close()
+    imagen_base64 = base64.b64encode(buffer.getvalue()).decode('utf-8')
+    return imagen_base64
+    
+def generar_grafico_personas_por_edad():
+    with connection.cursor() as cursor:
+        cursor.execute(
+            "SELECT DATE_FORMAT(FROM_DAYS(DATEDIFF(NOW(), FechaNacimiento)), '%Y')  + 0 AS age, count(*) from botapp_usuario group by FechaNacimiento;"
+        )
+        resultados = cursor.fetchall()
+    edades = []
+    cantidades = []
+    for resultado in resultados:
+        edad, cantidad = resultado
+        edades.append(edad)
+        cantidades.append(cantidad)
+    plt.bar(edades, cantidades, color='blue')
+    plt.xlabel('Edad')
+    plt.ylabel('Número de Personas')
+    plt.title('Ingresos por Edad')
+    buffer = BytesIO()
+    plt.savefig(buffer, format='png')
+    buffer.seek(0)
+    plt.close()
+    imagen_base64 = base64.b64encode(buffer.getvalue()).decode('utf-8')
+    return imagen_base64
+
+    
 @login_required
 def reportes(request):
     data = {
@@ -546,7 +593,9 @@ def reportes(request):
         "imagen_base64_pregunta4": generar_grafico_pregunta4(),
         "imagen_base64_pregunta5": generar_grafico_pregunta5(),
         "imagen_base64_pregunta6": generar_grafico_pregunta6(),  
-        "imagen_base64_referencias": generar_grafico_referencias(),     
+        "imagen_base64_referencias": generar_grafico_referencias(),
+        "imagen_base64_año": generar_grafico_personas_por_año(),
+        "imagen_base64_edades": generar_grafico_personas_por_edad(),
             }
     return render(request, "reportes.html", data)
 

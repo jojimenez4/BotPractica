@@ -7,13 +7,13 @@ class UsuarioForm(forms.ModelForm):
     Genero_Usuario = forms.ModelChoiceField(queryset=Genero.objects.all(), empty_label="Seleccione una opción", widget=forms.Select(attrs={'class': 'form-control'}))
     SistemaSalud_Usuario = forms.ModelChoiceField(queryset=SistemaSalud.objects.all(), empty_label="Seleccione una opción", widget=forms.Select(attrs={'class': 'form-control'}))
     Ocupacion_Usuario = forms.ModelChoiceField(queryset=Ocupacion.objects.all(), empty_label="Seleccione una opción", widget=forms.Select(attrs={'class': 'form-control'}))
-    AnioNacimiento = forms.DateField(widget=forms.DateInput(attrs={'type': 'date', 'class': 'dark-input'}))
+    FechaNacimiento = forms.DateField(widget=forms.DateInput(attrs={'type': 'date', 'class': 'dark-input'}))
     Rut = forms.CharField(max_length=10, widget=forms.TextInput(attrs={'class': 'form-control'}))
     Whatsapp = forms.CharField(max_length=200, widget=forms.TextInput(attrs={'class': 'form-control'}))
 
     class Meta:
         model = Usuario
-        fields = ['AnioNacimiento', 'Rut', 'Whatsapp', 'Comuna_Usuario', 'Genero_Usuario', 'SistemaSalud_Usuario', 'Ocupacion_Usuario']
+        fields = ['FechaNacimiento', 'Rut', 'Whatsapp', 'Comuna_Usuario', 'Genero_Usuario', 'SistemaSalud_Usuario', 'Ocupacion_Usuario']
 
     def clean_Comuna_Usuario(self):
         comuna = self.cleaned_data['Comuna_Usuario']
