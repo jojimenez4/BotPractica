@@ -20,11 +20,11 @@ class Migration(migrations.Migration):
         ),
         migrations.RemoveField(
             model_name='usuario',
-            name='anioNacimiento',
+            name='id_usuario',
         ),
         migrations.RemoveField(
             model_name='usuario',
-            name='id_usuario',
+            name='FechaNacimiento',
         ),
         migrations.AddField(
             model_name='respuestausuario',

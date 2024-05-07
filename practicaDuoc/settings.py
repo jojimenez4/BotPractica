@@ -86,12 +86,11 @@ WSGI_APPLICATION = "practicaDuoc.wsgi.application"
 
 DATABASES = {
     "default": {
-        'ENGINE': 'django.db.backends.mysql', 
-        'NAME': 'botpractica',
-        'USER': 'root',
-        'PASSWORD': 'system',
-        'HOST': 'localhost',
-        'PORT': '3306',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'jjimenez42$botpractica',
+        'USER': 'jjimenez42',
+        'PASSWORD': 'system42',
+        'HOST': 'jjimenez42.mysql.pythonanywhere-services.com',
     }
 }
 
@@ -146,7 +145,7 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
-    
+
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.IsAuthenticated',
     ),
