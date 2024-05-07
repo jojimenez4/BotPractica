@@ -59,7 +59,7 @@ class Migration(migrations.Migration):
             name='Usuario',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('anioNacimiento', models.DateField(verbose_name='Fecha de Nacimiento')),
+                ('FechaNacimiento', models.DateField(verbose_name='Fecha de Nacimiento')),
                 ('id_usuario', models.IntegerField()),
                 ('Comuna_Usuario', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to='botApp.comuna')),
                 ('Genero_Usuario', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to='botApp.genero')),

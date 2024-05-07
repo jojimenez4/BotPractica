@@ -560,7 +560,7 @@ def generar_grafico_personas_por_año():
 def generar_grafico_personas_por_edad():
     with connection.cursor() as cursor:
         cursor.execute(
-            "SELECT DATE_FORMAT(FROM_DAYS(DATEDIFF(NOW(), FechaNacimiento)), '%Y')  + 0 AS age, count(*) from botapp_usuario group by FechaNacimiento;"
+            "SELECT DATE_FORMAT(FROM_DAYS(DATEDIFF(NOW(), FechaNacimiento)), '%Y')  + 0 AS age, count(*) from botApp_usuario group by age;"
         )
         resultados = cursor.fetchall()
     edades = []
@@ -580,7 +580,133 @@ def generar_grafico_personas_por_edad():
     imagen_base64 = base64.b64encode(buffer.getvalue()).decode('utf-8')
     return imagen_base64
 
+def generar_grafico_personas_por_año_mujeres():
+    with connection.cursor() as cursor:
+        cursor.execute(
+            "SELECT YEAR(FechaNacimiento), COUNT(*) FROM botApp_usuario WHERE botApp_usuario.Genero_Usuario_id = 1 GROUP BY YEAR(FechaNacimiento);"
+        )
+        resultados = cursor.fetchall()
+    edades = []
+    cantidades = []
+    for resultado in resultados:
+        edad, cantidad = resultado
+        edades.append(edad)
+        cantidades.append(cantidad)
+    plt.bar(edades, cantidades, color='blue')
+    plt.xlabel('Año de Nacimiento')
+    plt.ylabel('Número de Personas')
+    plt.title('Ingresos por Año de Nacimiento')
+    buffer = BytesIO()
+    plt.savefig(buffer, format='png')
+    buffer.seek(0)
+    plt.close()
+    imagen_base64 = base64.b64encode(buffer.getvalue()).decode('utf-8')
+    return imagen_base64
+
+def generar_grafico_personas_por_edad_mujeres():
+    with connection.cursor() as cursor:
+        cursor.execute(
+            "SELECT DATE_FORMAT(FROM_DAYS(DATEDIFF(NOW(), FechaNacimiento)), '%Y')  + 0 AS age, count(*) from botApp_usuario WHERE botApp_usuario.Genero_Usuario_id = 1 group by age;"
+        )
+        resultados = cursor.fetchall()
+    edades = []
+    cantidades = []
+    for resultado in resultados:
+        edad, cantidad = resultado
+        edades.append(edad)
+        cantidades.append(cantidad)
+    plt.bar(edades, cantidades, color='blue')
+    plt.xlabel('Edad')
+    plt.ylabel('Número de Personas')
+    plt.title('Ingresos por Edad')
+    buffer = BytesIO()
+    plt.savefig(buffer, format='png')
+    buffer.seek(0)
+    plt.close()
+    imagen_base64 = base64.b64encode(buffer.getvalue()).decode('utf-8')
+    return imagen_base64
     
+def generar_grafico_respuestas_por_dia_mujeres():
+    with connection.cursor() as cursor:
+        cursor.execute(
+            "SELECT DATE(Fecha_Ingreso), COUNT(*) FROM botApp_usuario WHERE botApp_usuario.Genero_Usuario_id = 1 GROUP BY DATE(Fecha_Ingreso)"
+        )
+        resultados = cursor.fetchall()
+    fechas = []
+    cantidades = []
+    for resultado in resultados:
+        fecha, cantidad = resultado
+        fechas.append(datetime.strftime(fecha, "%Y-%m-%d"))
+        cantidades.append(cantidad)
+    plt.plot(fechas, cantidades, marker="o", linestyle="-", color="blue")
+    plt.xlabel("Fecha de Respuesta")
+    plt.ylabel("Número de Respuestas")
+    plt.title("Respuestas por Día")
+    # Agregar los valores de cada punto
+    for fecha, cantidad in zip(fechas, cantidades):
+        plt.annotate(f"{cantidad}", (fecha, cantidad), textcoords="offset points", xytext=(0,10), ha='center')
+    buffer = BytesIO()
+    plt.savefig(buffer, format="png")
+    buffer.seek(0)
+    plt.close()
+    imagen_base64 = base64.b64encode(buffer.getvalue()).decode("utf-8")
+    return imagen_base64
+
+def generar_grafico_ingresos_por_comuna_mujer():
+    with connection.cursor() as cursor:
+        cursor.execute(
+            "SELECT c.Nombre_Comuna, COUNT(*) AS TotalIngresos "
+            "FROM botApp_usuario u "
+            "JOIN botApp_comuna c ON u.Comuna_Usuario_id = c.id "
+            "WHERE u.Genero_Usuario_id = 1 GROUP BY c.Nombre_Comuna"
+        )
+        resultados = cursor.fetchall()
+    comunas = [result[0] for result in resultados]
+    total_ingresos = [result[1] for result in resultados]
+    # Configurar el gráfico circular
+    fig, ax = plt.subplots()
+    wedges, texts, autotexts = ax.pie(total_ingresos, labels=comunas, autopct=lambda pct: f"{pct:.1f}%\n{int(pct/100 * sum(total_ingresos))} ingresos", startangle=90)
+    ax.axis('equal')  # Asegura que el gráfico sea un círculo en lugar de una elipse
+    ax.set_title('Distribución de Ingresos por Comuna')
+    # Ajustar el tamaño de la fuente en los textos
+    for text, autotext in zip(texts, autotexts):
+        text.set(size=8)
+        autotext.set(size=8)
+    # Convertir el gráfico a base64
+    buffer = BytesIO()
+    plt.savefig(buffer, format='png')
+    buffer.seek(0)
+    plt.close()
+    imagen_base64 = base64.b64encode(buffer.getvalue()).decode("utf-8")
+    return imagen_base64
+
+def generar_grafico_referencias_mujer():
+    with connection.cursor() as cursor:
+        cursor.execute(
+            "SELECT u.Referencia, COUNT(*) AS TotalIngresos "
+            "FROM botApp_usuario u "
+            "WHERE u.Genero_Usuario_id = 1 GROUP BY u.Referencia"
+        )
+        resultados = cursor.fetchall()
+    referencias = [result[0] for result in resultados]
+    total_ingresos = [result[1] for result in resultados]
+    # Configurar el gráfico circular
+    fig, ax = plt.subplots()
+    wedges, texts, autotexts = ax.pie(total_ingresos, labels=referencias, autopct=lambda pct: f"{pct:.1f}%\n{int(pct/100 * sum(total_ingresos))} ingresos", startangle=90)
+    ax.axis('equal')  # Asegura que el gráfico sea un círculo en lugar de una elipse
+    ax.set_title('Distribución de Ingresos por Referencia')
+    # Ajustar el tamaño de la fuente en los textos
+    for text, autotext in zip(texts, autotexts):
+        text.set(size=8)
+        autotext.set(size=8)
+    # Convertir el gráfico a base64
+    buffer = BytesIO()
+    plt.savefig(buffer, format='png')
+    buffer.seek(0)
+    plt.close()
+    imagen_base64 = base64.b64encode(buffer.getvalue()).decode("utf-8")
+    return imagen_base64
+
 @login_required
 def reportes(request):
     data = {
@@ -596,6 +722,11 @@ def reportes(request):
         "imagen_base64_referencias": generar_grafico_referencias(),
         "imagen_base64_año": generar_grafico_personas_por_año(),
         "imagen_base64_edades": generar_grafico_personas_por_edad(),
+        "imagen_base64_año_mujeres": generar_grafico_personas_por_año_mujeres(),
+        "imagen_base64_edades_mujeres": generar_grafico_personas_por_edad_mujeres(),
+        "imagen_base64_ingresos_comuna_mujer": generar_grafico_ingresos_por_comuna_mujer(),
+        "imagen_base64_referencias_mujer": generar_grafico_referencias_mujer(),
+        "imagen_base64_ingresos_por_dia_mujeres": generar_grafico_respuestas_por_dia_mujeres(),
             }
     return render(request, "reportes.html", data)
 

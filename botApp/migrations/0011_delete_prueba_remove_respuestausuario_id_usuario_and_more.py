@@ -85,10 +85,4 @@ class Migration(migrations.Migration):
             name='SistemaSalud_Usuario',
             field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='botApp.sistemasalud'),
         ),
-        migrations.AddField(
-            model_name='usuario',
-            name='AnioNacimiento',
-            field=models.CharField(default=1, max_length=200, verbose_name='Fecha de Nacimiento'),
-            preserve_default=False,
-        ),
     ]
