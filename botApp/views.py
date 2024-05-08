@@ -30,7 +30,7 @@ from .serializer import *
 
 
 
-    
+
 @login_required
 def home(request):
     return render(request, "home.html")
@@ -240,7 +240,7 @@ def generar_grafico_personas_por_genero():
 
     imagen_base64 = base64.b64encode(buffer.getvalue()).decode("utf-8")
     return imagen_base64
-    
+
 def generar_grafico_ingresos_por_comuna():
     with connection.cursor() as cursor:
         cursor.execute(
@@ -327,10 +327,10 @@ def generar_grafico_pregunta1():
     # Configurar el gráfico circular
     fig, ax = plt.subplots()
     wedges, texts, autotexts = ax.pie(sizes, labels=None, autopct='%1.1f%%', startangle=90, colors=['lightgreen', 'lightcoral', 'lightblue'])
-    
+
     # Configurar las etiquetas del gráfico
     ax.legend(wedges, counts, title="Respuestas", loc="center left", bbox_to_anchor=(1, 0, 0.5, 1))
-    
+
     # Mostrar el gráfico
     plt.title('¿Te has realizado una mamografía?')
 
@@ -365,10 +365,10 @@ def generar_grafico_pregunta2():
     # Configurar el gráfico circular
     fig, ax = plt.subplots()
     wedges, texts, autotexts = ax.pie(sizes, labels=None, autopct='%1.1f%%', startangle=90, colors=['lightgreen', 'lightcoral','lightblue' ])
-    
+
     # Configurar las etiquetas del gráfico
     ax.legend(wedges, counts, title="Respuestas", loc="center left", bbox_to_anchor=(1, 0, 0.5, 1))
-    
+
     # Mostrar el gráfico
     plt.title('¿Recuerdas cuando fue tu última mamografía?')
 
@@ -403,10 +403,10 @@ def generar_grafico_pregunta3():
     # Configurar el gráfico circular
     fig, ax = plt.subplots()
     wedges, texts, autotexts = ax.pie(sizes, labels=None, autopct='%1.1f%%', startangle=90, colors=['lightgreen', 'lightcoral', 'lightblue', 'lightyellow'])
-    
+
     # Configurar las etiquetas del gráfico
     ax.legend(wedges, counts, title="Respuestas", loc="center left", bbox_to_anchor=(1, 0, 0.5, 1))
-    
+
     # Mostrar el gráfico
     plt.title('Fecha de la última mamografía')
 
@@ -441,10 +441,10 @@ def generar_grafico_pregunta4():
     # Configurar el gráfico circular
     fig, ax = plt.subplots()
     wedges, texts, autotexts = ax.pie(sizes, labels=None, autopct='%1.1f%%', startangle=90, colors=['lightgreen', 'lightcoral', 'lightblue', 'lightyellow'])
-    
+
     # Configurar las etiquetas del gráfico
     ax.legend(wedges, counts, title="Respuestas", loc="center left", bbox_to_anchor=(1, 0, 0.5, 1))
-    
+
     # Mostrar el gráfico
     plt.title('¿Tienes los archivos e informe de tu última mamografía?')
 
@@ -479,10 +479,10 @@ def generar_grafico_pregunta5():
     # Configurar el gráfico circular
     fig, ax = plt.subplots()
     wedges, texts, autotexts = ax.pie(sizes, labels=None, autopct='%1.1f%%', startangle=90, colors=['lightgreen', 'lightcoral', 'lightblue'])
-    
+
     # Configurar las etiquetas del gráfico
     ax.legend(wedges, counts, title="Respuestas", loc="center left", bbox_to_anchor=(1, 0, 0.5, 1))
-    
+
     # Mostrar el gráfico
     plt.title('¿Te gustaría recibir más información sobre el cuidado y prevención del cáncer de mama?')
 
@@ -517,10 +517,10 @@ def generar_grafico_pregunta6():
     # Configurar el gráfico circular
     fig, ax = plt.subplots()
     wedges, texts, autotexts = ax.pie(sizes, labels=None, autopct='%1.1f%%', startangle=90, colors=['lightgreen', 'lightcoral', 'lightblue'])
-    
+
     # Configurar las etiquetas del gráfico
     ax.legend(wedges, counts, title="Respuestas", loc="center left", bbox_to_anchor=(1, 0, 0.5, 1))
-    
+
     # Mostrar el gráfico
     plt.title('¿Tienes un familiar directo con cáncer de mama? (hermana, mama, tía, abuela)')
 
@@ -556,7 +556,7 @@ def generar_grafico_personas_por_año():
     plt.close()
     imagen_base64 = base64.b64encode(buffer.getvalue()).decode('utf-8')
     return imagen_base64
-    
+
 def generar_grafico_personas_por_edad():
     with connection.cursor() as cursor:
         cursor.execute(
@@ -625,7 +625,7 @@ def generar_grafico_personas_por_edad_mujeres():
     plt.close()
     imagen_base64 = base64.b64encode(buffer.getvalue()).decode('utf-8')
     return imagen_base64
-    
+
 def generar_grafico_respuestas_por_dia_mujeres():
     with connection.cursor() as cursor:
         cursor.execute(
@@ -707,6 +707,46 @@ def generar_grafico_referencias_mujer():
     imagen_base64 = base64.b64encode(buffer.getvalue()).decode("utf-8")
     return imagen_base64
 
+def generar_grafico_pregunta1_mujer():
+    with connection.cursor() as cursor:
+        cursor.execute(
+            "SELECT id_opc_respuesta_id, COUNT(*) FROM botApp_usuariorespuesta ur join botApp_usuario u on ur.Rut = u.Rut and u.Genero_Usuario_id = 1 WHERE id_opc_respuesta_id IN (8, 9) GROUP BY id_opc_respuesta_id;"
+        )
+        resultados = cursor.fetchall()
+
+    labels = []
+    sizes = []
+    counts = []
+
+    for resultado in resultados:
+        id_opc_respuesta, cantidad = resultado
+        opcion_respuesta = PreguntaOpcionRespuesta.objects.get(id=id_opc_respuesta)
+        labels.append(opcion_respuesta.OPC_Respuesta)
+        sizes.append(cantidad)
+        counts.append(f"{opcion_respuesta.OPC_Respuesta} - {cantidad}")
+
+    # Configurar el gráfico circular
+    fig, ax = plt.subplots()
+    wedges, texts, autotexts = ax.pie(sizes, labels=None, autopct='%1.1f%%', startangle=90, colors=['lightgreen', 'lightcoral', 'lightblue'])
+
+    # Configurar las etiquetas del gráfico
+    ax.legend(wedges, counts, title="Respuestas", loc="center left", bbox_to_anchor=(1, 0, 0.5, 1))
+
+    # Mostrar el gráfico
+    plt.title('¿Te has realizado una mamografía?')
+
+    # Guardar la imagen en un buffer
+    buffer = BytesIO()
+    plt.savefig(buffer, format="png", bbox_inches='tight')
+    buffer.seek(0)
+    plt.close()
+
+    # Convertir la imagen a base64
+    imagen_base64 = base64.b64encode(buffer.getvalue()).decode("utf-8")
+    return imagen_base64
+
+
+
 @login_required
 def reportes(request):
     data = {
@@ -718,7 +758,7 @@ def reportes(request):
         "imagen_base64_pregunta3": generar_grafico_pregunta3(),
         "imagen_base64_pregunta4": generar_grafico_pregunta4(),
         "imagen_base64_pregunta5": generar_grafico_pregunta5(),
-        "imagen_base64_pregunta6": generar_grafico_pregunta6(),  
+        "imagen_base64_pregunta6": generar_grafico_pregunta6(),
         "imagen_base64_referencias": generar_grafico_referencias(),
         "imagen_base64_año": generar_grafico_personas_por_año(),
         "imagen_base64_edades": generar_grafico_personas_por_edad(),
@@ -727,6 +767,7 @@ def reportes(request):
         "imagen_base64_ingresos_comuna_mujer": generar_grafico_ingresos_por_comuna_mujer(),
         "imagen_base64_referencias_mujer": generar_grafico_referencias_mujer(),
         "imagen_base64_ingresos_por_dia_mujeres": generar_grafico_respuestas_por_dia_mujeres(),
+        "imagen_base64_respuestas_mujer": generar_grafico_pregunta1_mujer(),
             }
     return render(request, "reportes.html", data)
 
@@ -907,7 +948,7 @@ class UsuarioAPIView(APIView):
         usuarios = Usuario.objects.all()
         serializer = UsuarioSerializer(usuarios, many=True)
         return Response(serializer.data)
-    
+
 class MensajeContenidoAPIView(APIView):
     authentication_classes = [SessionAuthentication]
     permission_classes = [IsAdminUser]
@@ -915,15 +956,15 @@ class MensajeContenidoAPIView(APIView):
         mensajes = MensajeContenido.objects.all()
         serializer = MensajeContenidoSerializer(mensajes, many=True)
         return Response(serializer.data)
-    
+
 class ObtenerID(APIView):
     def get(self, request):
         # Obtener la fecha de hoy
         fecha_hoy = date.today()
-        
+
         # Buscar un registro en la tabla que coincida con la fecha de hoy
         registro_hoy = MensajeContenido.objects.filter(fecha=fecha_hoy).first()
-        
+
         if registro_hoy:
             # Si se encuentra un registro para la fecha de hoy, devolverlo
             return Response({'id': registro_hoy.id, 'texto': registro_hoy.texto, 'genero': registro_hoy.Genero_Usuario.OPC_Genero})
