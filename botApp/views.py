@@ -710,7 +710,7 @@ def generar_grafico_referencias_mujer():
 def generar_grafico_pregunta1_mujer():
     with connection.cursor() as cursor:
         cursor.execute(
-            "SELECT id_opc_respuesta_id, COUNT(*) FROM botApp_usuariorespuesta ur join botApp_usuario u on ur.Rut = u.Rut and u.Genero_Usuario_id = 1 WHERE id_opc_respuesta_id IN (8, 9) GROUP BY id_opc_respuesta_id;"
+            "SELECT id_opc_respuesta_id, COUNT(*) FROM botapp_usuariorespuesta ur left join botapp_usuario u on ur.id_usuario = u.id where id_opc_respuesta_id in (8, 9) and u.Genero_Usuario_id = 1 group by id_opc_respuesta_id;"
         )
         resultados = cursor.fetchall()
 
@@ -762,12 +762,12 @@ def reportes(request):
         "imagen_base64_referencias": generar_grafico_referencias(),
         "imagen_base64_año": generar_grafico_personas_por_año(),
         "imagen_base64_edades": generar_grafico_personas_por_edad(),
-        "imagen_base64_año_mujeres": generar_grafico_personas_por_año_mujeres(),
-        "imagen_base64_edades_mujeres": generar_grafico_personas_por_edad_mujeres(),
+        "imagen_base64_año_mujer": generar_grafico_personas_por_año_mujeres(),
+        "imagen_base64_edades_mujer": generar_grafico_personas_por_edad_mujeres(),
         "imagen_base64_ingresos_comuna_mujer": generar_grafico_ingresos_por_comuna_mujer(),
         "imagen_base64_referencias_mujer": generar_grafico_referencias_mujer(),
-        "imagen_base64_ingresos_por_dia_mujeres": generar_grafico_respuestas_por_dia_mujeres(),
-        "imagen_base64_respuestas_mujer": generar_grafico_pregunta1_mujer(),
+        "imagen_base64_ingresos_por_dia_mujer": generar_grafico_respuestas_por_dia_mujeres(),
+        "imagen_base64_respuestas1_mujer": generar_grafico_pregunta1_mujer(),
             }
     return render(request, "reportes.html", data)
 
