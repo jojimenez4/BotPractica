@@ -710,7 +710,7 @@ def generar_grafico_referencias_mujer():
 def generar_grafico_pregunta1_mujer():
     with connection.cursor() as cursor:
         cursor.execute(
-            "SELECT id_opc_respuesta_id, COUNT(*) FROM botApp_usuariorespuesta ur left join botApp_usuario u on ur.id_usuario = u.id where id_opc_respuesta_id in (8, 9) and u.Genero_Usuario_id = 1 group by id_opc_respuesta_id;"
+            "SELECT id_opc_respuesta_id, COUNT(*) FROM botApp_usuariorespuesta ur left join botApp_usuario u on ur.id_usuario_id = u.id where id_opc_respuesta_id in (8, 9) and u.Genero_Usuario_id = 1 group by id_opc_respuesta_id;"
         )
         resultados = cursor.fetchall()
 
@@ -748,7 +748,7 @@ def generar_grafico_pregunta1_mujer():
 def generar_grafico_pregunta2_mujer():
     with connection.cursor() as cursor:
         cursor.execute(
-            "SELECT id_opc_respuesta_id, COUNT(*) FROM botApp_usuariorespuesta ur left join botApp_usuario u on ur.id_usuario = u.id WHERE id_opc_respuesta_id IN (10, 11, 12) and u.Genero_Usuario_id = 1 GROUP BY id_opc_respuesta_id;"
+            "SELECT id_opc_respuesta_id, COUNT(*) FROM botApp_usuariorespuesta ur left join botApp_usuario u on ur.id_usuario_id = u.id WHERE id_opc_respuesta_id IN (10, 11, 12) and u.Genero_Usuario_id = 1 GROUP BY id_opc_respuesta_id;"
         )
         resultados = cursor.fetchall()
 
@@ -786,7 +786,7 @@ def generar_grafico_pregunta2_mujer():
 def generar_grafico_pregunta3_mujer():
     with connection.cursor() as cursor:
         cursor.execute(
-            "SELECT id_opc_respuesta_id, COUNT(*) FROM botApp_usuariorespuesta ur left join botApp_usuario u on ur.id_usuario = u.id WHERE id_opc_respuesta_id IN (13, 14, 15, 16) and u.Genero_Usuario_id = 1 GROUP BY id_opc_respuesta_id"
+            "SELECT id_opc_respuesta_id, COUNT(*) FROM botApp_usuariorespuesta ur left join botApp_usuario u on ur.id_usuario_id = u.id WHERE id_opc_respuesta_id IN (13, 14, 15, 16) and u.Genero_Usuario_id = 1 GROUP BY id_opc_respuesta_id"
         )
         resultados = cursor.fetchall()
 
@@ -824,7 +824,7 @@ def generar_grafico_pregunta3_mujer():
 def generar_grafico_pregunta4_mujer():
     with connection.cursor() as cursor:
         cursor.execute(
-            "SELECT id_opc_respuesta_id, COUNT(*) FROM botApp_usuariorespuesta ur left join botApp_usuario u on ur.id_usuario = u.id WHERE id_opc_respuesta_id IN (17, 18, 19, 20) and u.Genero_Usuario_id = 1 GROUP BY id_opc_respuesta_id"
+            "SELECT id_opc_respuesta_id, COUNT(*) FROM botApp_usuariorespuesta ur left join botApp_usuario u on ur.id_usuario_id = u.id WHERE id_opc_respuesta_id IN (17, 18, 19, 20) and u.Genero_Usuario_id = 1 GROUP BY id_opc_respuesta_id"
         )
         resultados = cursor.fetchall()
 
@@ -862,7 +862,7 @@ def generar_grafico_pregunta4_mujer():
 def generar_grafico_pregunta5_mujer():
     with connection.cursor() as cursor:
         cursor.execute(
-            "SELECT id_opc_respuesta_id, COUNT(*) FROM botApp_usuariorespuesta ur left join botApp_usuario u on ur.id_usuario = u.id WHERE id_opc_respuesta_id IN (21, 22, 23) and u.Genero_Usuario_id = 1 GROUP BY id_opc_respuesta_id"
+            "SELECT id_opc_respuesta_id, COUNT(*) FROM botApp_usuariorespuesta ur left join botApp_usuario u on ur.id_usuario_id = u.id WHERE id_opc_respuesta_id IN (21, 22, 23) and u.Genero_Usuario_id = 1 GROUP BY id_opc_respuesta_id"
         )
         resultados = cursor.fetchall()
 
@@ -900,7 +900,7 @@ def generar_grafico_pregunta5_mujer():
 def generar_grafico_pregunta6_mujer():
     with connection.cursor() as cursor:
         cursor.execute(
-            "SELECT id_opc_respuesta_id, COUNT(*) FROM botApp_usuariorespuesta ur left join botApp_usuario u on ur.id_usuario = u.id WHERE id_opc_respuesta_id IN (25, 26, 27) and u.Genero_Usuario_id = 1 GROUP BY id_opc_respuesta_id"
+            "SELECT id_opc_respuesta_id, COUNT(*) FROM botApp_usuariorespuesta ur left join botApp_usuario u on ur.id_usuario_id = u.id WHERE id_opc_respuesta_id IN (25, 26, 27) and u.Genero_Usuario_id = 1 GROUP BY id_opc_respuesta_id"
         )
         resultados = cursor.fetchall()
 
@@ -938,7 +938,7 @@ def generar_grafico_pregunta6_mujer():
 def generar_grafico_edad_por_respuesta():
     with connection.cursor() as cursor:
         cursor.execute(
-            "SELECT DATE_FORMAT(FROM_DAYS(DATEDIFF(NOW(), FechaNacimiento)), '%Y')  + 0 AS age, COUNT(*) from botApp_usuariorespuesta ur left join botApp_usuario u on ur.id_usuario = u.id where ur.id_opc_respuesta_id = 8 and u.Genero_Usuario_id = 1 group by age;"
+            "SELECT DATE_FORMAT(FROM_DAYS(DATEDIFF(NOW(), FechaNacimiento)), '%Y')  + 0 AS age, COUNT(*) from botApp_usuariorespuesta ur left join botApp_usuario u on ur.id_usuario_id = u.id where ur.id_opc_respuesta_id = 8 and u.Genero_Usuario_id = 1 group by age;"
         )
         resultados = cursor.fetchall()
     edades = []
@@ -961,7 +961,7 @@ def generar_grafico_edad_por_respuesta():
 def generar_grafico_edad_por_respuesta2():
     with connection.cursor() as cursor:
         cursor.execute(
-            "SELECT DATE_FORMAT(FROM_DAYS(DATEDIFF(NOW(), FechaNacimiento)), '%Y')  + 0 AS age, COUNT(*) from botApp_usuariorespuesta ur left join botApp_usuario u on ur.id_usuario = u.id where ur.id_opc_respuesta_id = 9 and u.Genero_Usuario_id = 1 group by age;"
+            "SELECT DATE_FORMAT(FROM_DAYS(DATEDIFF(NOW(), FechaNacimiento)), '%Y')  + 0 AS age, COUNT(*) from botApp_usuariorespuesta ur left join botApp_usuario u on ur.id_usuario_id = u.id where ur.id_opc_respuesta_id = 9 and u.Genero_Usuario_id = 1 group by age;"
         )
         resultados = cursor.fetchall()
     edades = []
