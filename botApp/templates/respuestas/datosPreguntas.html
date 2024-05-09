@@ -15,15 +15,17 @@
                     <th>Rut</th>
                     <th>Respuesta</th>
                     <th>Fecha Respuesta</th>
+                    <th>ID_usuario</th>
                 </tr>
             </thead>
             <tbody>
                 {% for dato in Datos %}
                 <tr>
                     <td>{{ dato.id }}</td>
-                    <td>{{ dato.Rut }}</td>
                     <td>{{ dato.id_opc_respuesta }}</td>
                     <td>{{ dato.fecha_respuesta }}</td>
+                    <td>{{ dato.Rut }}</td>
+                    <td>{{ dato.id_usuario }}</td>
 
                 </tr>
                 {% endfor %}

@@ -935,6 +935,51 @@ def generar_grafico_pregunta6_mujer():
     imagen_base64 = base64.b64encode(buffer.getvalue()).decode("utf-8")
     return imagen_base64
 
+def generar_grafico_edad_por_respuesta():
+    with connection.cursor() as cursor:
+        cursor.execute(
+            "SELECT DATE_FORMAT(FROM_DAYS(DATEDIFF(NOW(), FechaNacimiento)), '%Y')  + 0 AS age, COUNT(*) from botApp_usuariorespuesta ur left join botApp_usuario u on ur.id_usuario = u.id where ur.id_opc_respuesta_id = 8 and u.Genero_Usuario_id = 1 group by age;"
+        )
+        resultados = cursor.fetchall()
+    edades = []
+    cantidades = []
+    for resultado in resultados:
+        edad, cantidad = resultado
+        edades.append(edad)
+        cantidades.append(cantidad)
+    plt.bar(edades, cantidades, color='blue')
+    plt.xlabel('Edad')
+    plt.ylabel('Número de Respuestas')
+    plt.title('Edad Mujer que se ha realizado una mamografía')
+    buffer = BytesIO()
+    plt.savefig(buffer, format='png')
+    buffer.seek(0)
+    plt.close()
+    imagen_base64 = base64.b64encode(buffer.getvalue()).decode('utf-8')
+    return imagen_base64
+
+def generar_grafico_edad_por_respuesta2():
+    with connection.cursor() as cursor:
+        cursor.execute(
+            "SELECT DATE_FORMAT(FROM_DAYS(DATEDIFF(NOW(), FechaNacimiento)), '%Y')  + 0 AS age, COUNT(*) from botApp_usuariorespuesta ur left join botApp_usuario u on ur.id_usuario = u.id where ur.id_opc_respuesta_id = 9 and u.Genero_Usuario_id = 1 group by age;"
+        )
+        resultados = cursor.fetchall()
+    edades = []
+    cantidades = []
+    for resultado in resultados:
+        edad, cantidad = resultado
+        edades.append(edad)
+        cantidades.append(cantidad)
+    plt.bar(edades, cantidades, color='blue')
+    plt.xlabel('Edad')
+    plt.ylabel('Número de Respuestas')
+    plt.title('Edad Mujer que no se ha realizado una mamografía')
+    buffer = BytesIO()
+    plt.savefig(buffer, format='png')
+    buffer.seek(0)
+    plt.close()
+    imagen_base64 = base64.b64encode(buffer.getvalue()).decode('utf-8')
+    return imagen_base64
 
 @login_required
 def reportes(request):
@@ -962,6 +1007,8 @@ def reportes(request):
         "imagen_base64_respuestas4_mujer": generar_grafico_pregunta4_mujer(),
         "imagen_base64_respuestas5_mujer": generar_grafico_pregunta5_mujer(),
         "imagen_base64_respuestas6_mujer": generar_grafico_pregunta6_mujer(),
+        "imagen_base64_edad_por_respuesta": generar_grafico_edad_por_respuesta(),
+        "imagen_base64_edad_por_respuesta2": generar_grafico_edad_por_respuesta2(),
             }
     return render(request, "reportes.html", data)
 
