@@ -710,7 +710,7 @@ def generar_grafico_referencias_mujer():
 def generar_grafico_pregunta1_mujer():
     with connection.cursor() as cursor:
         cursor.execute(
-            "SELECT id_opc_respuesta_id, COUNT(*) FROM botapp_usuariorespuesta ur left join botapp_usuario u on ur.id_usuario = u.id where id_opc_respuesta_id in (8, 9) and u.Genero_Usuario_id = 1 group by id_opc_respuesta_id;"
+            "SELECT id_opc_respuesta_id, COUNT(*) FROM botApp_usuariorespuesta ur left join botApp_usuario u on ur.id_usuario = u.id where id_opc_respuesta_id in (8, 9) and u.Genero_Usuario_id = 1 group by id_opc_respuesta_id;"
         )
         resultados = cursor.fetchall()
 
@@ -745,6 +745,195 @@ def generar_grafico_pregunta1_mujer():
     imagen_base64 = base64.b64encode(buffer.getvalue()).decode("utf-8")
     return imagen_base64
 
+def generar_grafico_pregunta2_mujer():
+    with connection.cursor() as cursor:
+        cursor.execute(
+            "SELECT id_opc_respuesta_id, COUNT(*) FROM botApp_usuariorespuesta ur left join botApp_usuario u on ur.id_usuario = u.id WHERE id_opc_respuesta_id IN (10, 11, 12) and u.Genero_Usuario_id = 1 GROUP BY id_opc_respuesta_id;"
+        )
+        resultados = cursor.fetchall()
+
+    labels = []
+    sizes = []
+    counts = []
+
+    for resultado in resultados:
+        id_opc_respuesta, cantidad = resultado
+        opcion_respuesta = PreguntaOpcionRespuesta.objects.get(id=id_opc_respuesta)
+        labels.append(opcion_respuesta.OPC_Respuesta)
+        sizes.append(cantidad)
+        counts.append(f"{opcion_respuesta.OPC_Respuesta} - {cantidad}")
+
+    # Configurar el gráfico circular
+    fig, ax = plt.subplots()
+    wedges, texts, autotexts = ax.pie(sizes, labels=None, autopct='%1.1f%%', startangle=90, colors=['lightgreen', 'lightcoral','lightblue' ])
+
+    # Configurar las etiquetas del gráfico
+    ax.legend(wedges, counts, title="Respuestas", loc="center left", bbox_to_anchor=(1, 0, 0.5, 1))
+
+    # Mostrar el gráfico
+    plt.title('¿Recuerdas cuando fue tu última mamografía?')
+
+    # Guardar la imagen en un buffer
+    buffer = BytesIO()
+    plt.savefig(buffer, format="png", bbox_inches='tight')
+    buffer.seek(0)
+    plt.close()
+
+    # Convertir la imagen a base64
+    imagen_base64 = base64.b64encode(buffer.getvalue()).decode("utf-8")
+    return imagen_base64
+
+def generar_grafico_pregunta3_mujer():
+    with connection.cursor() as cursor:
+        cursor.execute(
+            "SELECT id_opc_respuesta_id, COUNT(*) FROM botApp_usuariorespuesta ur left join botApp_usuario u on ur.id_usuario = u.id WHERE id_opc_respuesta_id IN (13, 14, 15, 16) and u.Genero_Usuario_id = 1 GROUP BY id_opc_respuesta_id"
+        )
+        resultados = cursor.fetchall()
+
+    labels = []
+    sizes = []
+    counts = []
+
+    for resultado in resultados:
+        id_opc_respuesta, cantidad = resultado
+        opcion_respuesta = PreguntaOpcionRespuesta.objects.get(id=id_opc_respuesta)
+        labels.append(opcion_respuesta.OPC_Respuesta)
+        sizes.append(cantidad)
+        counts.append(f"{opcion_respuesta.OPC_Respuesta} - {cantidad}")
+
+    # Configurar el gráfico circular
+    fig, ax = plt.subplots()
+    wedges, texts, autotexts = ax.pie(sizes, labels=None, autopct='%1.1f%%', startangle=90, colors=['lightgreen', 'lightcoral', 'lightblue', 'lightyellow'])
+
+    # Configurar las etiquetas del gráfico
+    ax.legend(wedges, counts, title="Respuestas", loc="center left", bbox_to_anchor=(1, 0, 0.5, 1))
+
+    # Mostrar el gráfico
+    plt.title('Fecha de la última mamografía')
+
+    # Guardar la imagen en un buffer
+    buffer = BytesIO()
+    plt.savefig(buffer, format="png", bbox_inches='tight')
+    buffer.seek(0)
+    plt.close()
+
+    # Convertir la imagen a base64
+    imagen_base64 = base64.b64encode(buffer.getvalue()).decode("utf-8")
+    return imagen_base64
+
+def generar_grafico_pregunta4_mujer():
+    with connection.cursor() as cursor:
+        cursor.execute(
+            "SELECT id_opc_respuesta_id, COUNT(*) FROM botApp_usuariorespuesta ur left join botApp_usuario u on ur.id_usuario = u.id WHERE id_opc_respuesta_id IN (17, 18, 19, 20) and u.Genero_Usuario_id = 1 GROUP BY id_opc_respuesta_id"
+        )
+        resultados = cursor.fetchall()
+
+    labels = []
+    sizes = []
+    counts = []
+
+    for resultado in resultados:
+        id_opc_respuesta, cantidad = resultado
+        opcion_respuesta = PreguntaOpcionRespuesta.objects.get(id=id_opc_respuesta)
+        labels.append(opcion_respuesta.OPC_Respuesta)
+        sizes.append(cantidad)
+        counts.append(f"{opcion_respuesta.OPC_Respuesta} - {cantidad}")
+
+    # Configurar el gráfico circular
+    fig, ax = plt.subplots()
+    wedges, texts, autotexts = ax.pie(sizes, labels=None, autopct='%1.1f%%', startangle=90, colors=['lightgreen', 'lightcoral', 'lightblue', 'lightyellow'])
+
+    # Configurar las etiquetas del gráfico
+    ax.legend(wedges, counts, title="Respuestas", loc="center left", bbox_to_anchor=(1, 0, 0.5, 1))
+
+    # Mostrar el gráfico
+    plt.title('¿Tienes los archivos e informe de tu última mamografía?')
+
+    # Guardar la imagen en un buffer
+    buffer = BytesIO()
+    plt.savefig(buffer, format="png", bbox_inches='tight')
+    buffer.seek(0)
+    plt.close()
+
+    # Convertir la imagen a base64
+    imagen_base64 = base64.b64encode(buffer.getvalue()).decode("utf-8")
+    return imagen_base64
+
+def generar_grafico_pregunta5_mujer():
+    with connection.cursor() as cursor:
+        cursor.execute(
+            "SELECT id_opc_respuesta_id, COUNT(*) FROM botApp_usuariorespuesta ur left join botapp_usuario u on ur.id_usuario = u.id WHERE id_opc_respuesta_id IN (21, 22, 23) and u.Genero_Usuario_id = 1 GROUP BY id_opc_respuesta_id"
+        )
+        resultados = cursor.fetchall()
+
+    labels = []
+    sizes = []
+    counts = []
+
+    for resultado in resultados:
+        id_opc_respuesta, cantidad = resultado
+        opcion_respuesta = PreguntaOpcionRespuesta.objects.get(id=id_opc_respuesta)
+        labels.append(opcion_respuesta.OPC_Respuesta)
+        sizes.append(cantidad)
+        counts.append(f"{opcion_respuesta.OPC_Respuesta} - {cantidad}")
+
+    # Configurar el gráfico circular
+    fig, ax = plt.subplots()
+    wedges, texts, autotexts = ax.pie(sizes, labels=None, autopct='%1.1f%%', startangle=90, colors=['lightgreen', 'lightcoral', 'lightblue'])
+
+    # Configurar las etiquetas del gráfico
+    ax.legend(wedges, counts, title="Respuestas", loc="center left", bbox_to_anchor=(1, 0, 0.5, 1))
+
+    # Mostrar el gráfico
+    plt.title('¿Te gustaría recibir más información sobre el cuidado y prevención del cáncer de mama?')
+
+    # Guardar la imagen en un buffer
+    buffer = BytesIO()
+    plt.savefig(buffer, format="png", bbox_inches='tight')
+    buffer.seek(0)
+    plt.close()
+
+    # Convertir la imagen a base64
+    imagen_base64 = base64.b64encode(buffer.getvalue()).decode("utf-8")
+    return imagen_base64
+
+def generar_grafico_pregunta6_mujer():
+    with connection.cursor() as cursor:
+        cursor.execute(
+            "SELECT id_opc_respuesta_id, COUNT(*) FROM botApp_usuariorespuesta ur left join botapp_usuario u on ur.id_usuario = u.id WHERE id_opc_respuesta_id IN (25, 26, 27) and u.Genero_Usuario_id = 1 GROUP BY id_opc_respuesta_id"
+        )
+        resultados = cursor.fetchall()
+
+    labels = []
+    sizes = []
+    counts = []
+
+    for resultado in resultados:
+        id_opc_respuesta, cantidad = resultado
+        opcion_respuesta = PreguntaOpcionRespuesta.objects.get(id=id_opc_respuesta)
+        labels.append(opcion_respuesta.OPC_Respuesta)
+        sizes.append(cantidad)
+        counts.append(f"{opcion_respuesta.OPC_Respuesta} - {cantidad}")
+
+    # Configurar el gráfico circular
+    fig, ax = plt.subplots()
+    wedges, texts, autotexts = ax.pie(sizes, labels=None, autopct='%1.1f%%', startangle=90, colors=['lightgreen', 'lightcoral', 'lightblue'])
+
+    # Configurar las etiquetas del gráfico
+    ax.legend(wedges, counts, title="Respuestas", loc="center left", bbox_to_anchor=(1, 0, 0.5, 1))
+
+    # Mostrar el gráfico
+    plt.title('¿Tienes un familiar directo con cáncer de mama? (hermana, mama, tía, abuela)')
+
+    # Guardar la imagen en un buffer
+    buffer = BytesIO()
+    plt.savefig(buffer, format="png", bbox_inches='tight')
+    buffer.seek(0)
+    plt.close()
+
+    # Convertir la imagen a base64
+    imagen_base64 = base64.b64encode(buffer.getvalue()).decode("utf-8")
+    return imagen_base64
 
 
 @login_required
@@ -768,6 +957,11 @@ def reportes(request):
         "imagen_base64_referencias_mujer": generar_grafico_referencias_mujer(),
         "imagen_base64_ingresos_por_dia_mujer": generar_grafico_respuestas_por_dia_mujeres(),
         "imagen_base64_respuestas1_mujer": generar_grafico_pregunta1_mujer(),
+        "imagen_base64_respuestas2_mujer": generar_grafico_pregunta2_mujer(),
+        "imagen_base64_respuestas3_mujer": generar_grafico_pregunta3_mujer(),
+        "imagen_base64_respuestas4_mujer": generar_grafico_pregunta4_mujer(),
+        "imagen_base64_respuestas5_mujer": generar_grafico_pregunta5_mujer(),
+        "imagen_base64_respuestas6_mujer": generar_grafico_pregunta6_mujer(),
             }
     return render(request, "reportes.html", data)
 
